@@ -9,6 +9,13 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 

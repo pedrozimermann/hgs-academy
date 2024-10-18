@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
+use App\Filament\Resources\DepartmentResource\Pages;
+use App\Filament\Resources\DepartmentResource\RelationManagers;
+use App\Models\Department;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserResource extends Resource
+class DepartmentResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = Department::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,27 +23,9 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-
                 Forms\Components\TextInput::make('name')
                     ->required() // cannot empty
                     ->maxLength(255), // max char 255
-
-                Forms\Components\TextInput::make('email')
-                    ->required() // cannot empty
-                    ->email() // email validation
-                    ->maxLength(255), // max char 255
-
-                Forms\Components\TextInput::make('password')
-                    ->required() // cannot empty
-                    ->password() //  password text input
-                    ->revealable() // hide show password
-                    ->maxLength(255), // max char 255
-
-                Forms\Components\Select::make('department_id')
-                    ->label('Department')
-                    ->relationship('department', 'name')
-                    ->required(),
-
             ]);
     }
 
@@ -52,7 +34,6 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('email')->searchable(),
             ])
             ->filters([
                 //
@@ -77,9 +58,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListDepartments::route('/'),
+            'create' => Pages\CreateDepartment::route('/create'),
+            'edit' => Pages\EditDepartment::route('/{record}/edit'),
         ];
     }
 }
